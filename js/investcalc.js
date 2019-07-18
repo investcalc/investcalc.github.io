@@ -192,12 +192,16 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
         chart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['After '+years+' years'],
-                datasets: []
+                labels: [],
+                datasets: [{ borderWidth: 1 }]
             },
             options: {
+                title: {
+                    display: true,
+                    text: 'Approx. total invested ($) after 10 years'
+                },
                 legend: {
-                    display: true
+                    display: false
                 },
                 tooltips: {
                     callbacks: {
@@ -208,28 +212,15 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
                         }
                     }
                 },
-                scales: {
-                    yAxes: [{
-                        scaleLabel: {
-                            display: true,
-                            labelString: 'Approx. total invested ($)'
-                        }
-                    }]
-                }
             }
         });
     }
-    while (chart.data.datasets.length < nvals.length) chart.data.datasets.push({
-        borderWidth: 1
-    });
-    while (chart.data.datasets.length > nvals.length) chart.data.datasets.pop();
 
-    for (var j=0; j<nvals.length; j++) {
-        chart.data.datasets[j].label = labels[j];
-        chart.data.datasets[j].data = [data[j]];
-        chart.data.datasets[j].borderColor = borderColors[j];
-        chart.data.datasets[j].backgroundColor = backgroundColors[j];
-    }
+    chart.data.labels = labels;
+    chart.data.datasets[0].label = 'After 10 years';
+    chart.data.datasets[0].data = data;
+    chart.data.datasets[0].borderColor = borderColors;
+    chart.data.datasets[0].backgroundColor = backgroundColors;
 
     chart.update();
 }
