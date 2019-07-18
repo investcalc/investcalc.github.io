@@ -1,0 +1,41 @@
+@media (min-width: 48em) {
+    .container {
+        max-width: 46rem;
+    }
+}
+
+.subcontainer {
+    padding: 3rem 1.5rem;
+}
+
+.subcontainer h1 {
+    text-align: center;
+    margin-bottom: 1em;
+}
+#headimg {
+    display: block;
+    max-width: 70%;
+    margin-bottom: 2em;
+}
+#results {
+    margin-top: 3em;
+    text-align: center;
+}
+#faq {
+    margin-top: 3em;
+    text-align: center;
+}
+.disclaimer {
+    font-size: 70%;
+    color: #666;
+}
+.faq-answer {
+    font-size: 90%;
+    margin-left: 1rem;
+    margin-bottom: 1rem;
+    color: #444;
+}
+.extranote {
+    font-size: 90%;
+    color: #444;
+}

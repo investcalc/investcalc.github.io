@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Investment Frequency Calculator</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+  <body>
+    <div class="container">
+        <div class="subcontainer">
+            <noscript><div class="alert alert-danger" role="alert">Please enable Javascript to use this page.</div></noscript>
+            <img id="headimg" src="img/header.png" class="img-fluid mx-auto">
+            <h1>Investment Frequency Calculator</h1>
+            <form id="freqcalc" onSubmit="return false;">
+                <div class="form-group row">
+                    <label for="savefreq" class="col-6 col-form-label">Income frequency</label>
+                    <div class="col-6">
+                        <select class="form-control" id="savefreq">
+                            <option value="365">Daily</option>
+                            <option value="52">Weekly</option>
+                            <option value="26" selected>Fortnightly</option>
+                            <option value="12">Monthly</option>
+                            <option value="4">Quarterly</option>
+                            <option value="2">Twice-yearly</option>
+                            <option value="1">Annually</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label id="savingsLabel" for="savings" class="col-6 col-form-label">Savings</label>
+                    <div class="col-6 input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                        <input type="number" class="form-control" id="savings" value="100" min="1" required>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="interest" class="col-6 col-form-label" title="Compounded monthly">Interest rate on savings</label>
+                    <div class="col-6 input-group">
+                        <input type="number" step="0.01" class="form-control" id="interest" value="2" min="0" required>
+                        <div class="input-group-append"><span class="input-group-text">%</span></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="growth" class="col-6 col-form-label" title="Continous per annum growth">Expected investment returns</label>
+                    <div class="col-6 input-group">
+                        <input type="number" step="0.1" class="form-control" id="growth" value="9.0" min="0.1" required>
+                        <div class="input-group-append"><span class="input-group-text">%</span></div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="brokerage" class="col-6 col-form-label" title="">Brokerage/commission per parcel</label>
+                    <div class="col-6 input-group">
+                        <div class="input-group-prepend"><span class="input-group-text">$</span></div>
+                        <input type="number" step="0.01" class="form-control" id="brokerage" value="9.50" min="0.00" required>
+                    </div>
+                </div>
+            </form>
+            <div id="warning" class="alert alert-warning" role="alert" style="display: none"></div>
+
+            <div id="results">
+                <h3>Optimal investment schedule:</h3>
+                <p class="lead" id="result"></p>
+
+                <canvas id="chart" style="display: none"></canvas>
+
+                <p class="disclaimer text-justify">Results from this calculator should not be taken as any kind of investment advice. “Optimal” refers only to solving a particular mathematical problem based on constant rates of return and cannot predict or take into account the actual future movements in financial markets. Every individual situation is different and you should consult a qualified financial planner and/or tax accountant.</p>
+            </div>
+
+            <div id="faq">
+                <h3>Frequently asked questions:</h3>
+                <div class="text-left">
+                    <h5>What’s the purpose of this calculator?</h5>
+                    <div class="faq-answer text-justify">This calculator is designed for the situation in which you receive a regular salary (e.g. each fortnight) and set aside some for investing in a parcel of shares. However, if you have to pay brokerage on every parcel then it may be better to keep that money aside in a savings account until you have saved for a larger parcel. Invest too often and you’ll pay too much brokerage. Don’t invest often enough and you’ll miss out on (higher) returns from the market. This calculator is designed to find the optimal frequency to maximise long-term returns based on the input parameters and assumptions.</div>
+
+                    <h5>What is the mathematics behind this?</h5>
+                    <div class="faq-answer text-justify">The mathematics used to calculate this were written by me (codebeard) and first appeared at the <a href="https://money.stackexchange.com/questions/30734/frequency-of-investments-to-maximise-returns-and-minimise-fees/30774#30774">Money StackExchange</a> (go here to see all the details). I have a PhD in mathematics and am interested in personal finance.</div>
+
+                    <h5>What if I am investing in multiple shares/ETFs?</h5>
+                    <div class="faq-answer text-justify">There are a couple of common approaches for this situation: If you are trying to keep your investment portfolio aligned with some target portfolio (e.g. 70% A, 30% B), then one approach is to just invest each time in whichever single share is furthest under the target at that point. The other approach would be if you have a fixed amount you want to invest in each share per saving period, in which case you should just use the calculator once for each share, for example with $100/fortnight for A and then with $200/fortnight for B.</div>
+
+                    <h5>What should I invest in? Can you give me investment advice?</h5>
+                    <div class="faq-answer text-justify">I am not an accountant or financial adviser – please see a professional. For general discussion on finance and investment, you can find many helpful forums online.</div>
+
+                    <h5>Do you collect data about the numbers I enter?</h5>
+                    <div class="faq-answer text-justify">Certainly not – your privacy is respected! All calculations are performed within your own browser.</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" integrity="sha256-Uv9BNBucvCPipKQ2NS9wYpJmi8DTOEfTA/nH2aoJALw=" crossorigin="anonymous"></script>
+    <script src="js/investcalc.js"></script>
+  </body>
+</html>
