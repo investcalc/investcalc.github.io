@@ -198,7 +198,14 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
             options: {
                 title: {
                     display: true,
-                    text: 'Approx. total invested ($) after 10 years'
+                    text: 'Approx. total invested ($) after 10 years',
+                    padding: 18
+                },
+                plugins: {
+                    datalabels: {
+                        anchor: 'end',
+                        align: 'end'
+                    },
                 },
                 legend: {
                     display: false
