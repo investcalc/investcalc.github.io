@@ -203,6 +203,13 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
                 legend: {
                     display: false
                 },
+                scales: {
+                    yAxes: [{
+                        ticks: {
+                            beginAtZero: true
+                        }
+                    }]
+                },
                 tooltips: {
                     callbacks: {
                         label: function(tooltipItem, data) {
