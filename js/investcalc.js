@@ -187,6 +187,10 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
         labels.push(label);
         data.push(Math.round(fv(savings,interval,interest,growth,brokerage,nvals[j],years/interval)));
     }
+    var minyval = data.reduce(function (a,v) { return Math.min(a,v); }, Infinity);
+    var maxyval = data.reduce(function (a,v) { return Math.max(a,v); }, -Infinity);
+    var span = maxyval - minyval;
+    var suggestedMin = Math.max(minyval-span, 0);
     if (typeof chart == 'undefined') {
         var ctx = document.getElementById('chart').getContext('2d');
         chart = new Chart(ctx, {
@@ -221,6 +225,7 @@ function updateChart(opt, interval, savings, interest, growth, brokerage) {
     chart.data.datasets[0].data = data;
     chart.data.datasets[0].borderColor = borderColors;
     chart.data.datasets[0].backgroundColor = backgroundColors;
+    chart.options.scales.yAxes[0].ticks.suggestedMin = suggestedMin;
 
     chart.update();
 }
